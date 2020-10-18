@@ -1,0 +1,39 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+ 		<title>Welcome to the drawing game</title>
+    <style>
+    </style>
+	</head>
+
+    <button type="button" onclick="reqRoomClicked()" id="requestRoom" class="gamebutton">Start Game</button>
+    <button type="button" id="joinRoom" class="gamebutton">Join Game</button>
+
+
+    <div id = "NameSpace">
+      
+    </div>
+
+    <!--<script src="/socket.io/socket.io.js"
+    ></script>
+    <script>var socket = io();</script> -->
+    <script>
+    	const socket = io();
+
+		socket.on('returnRoomReq', function(roomName) {
+			var returnName = getElementById("NameSpace");
+			var nameString = createElement("p");
+			nameString.innerHTML = "The room code is " + roomName;
+			returnName.appendChild(nameString);
+		});
+
+		reqRoomClicked() {
+			socket.emit('requestRoom', 'need a room');
+		}
+	</script>
+  </body>
+  </html> 
+</html>
