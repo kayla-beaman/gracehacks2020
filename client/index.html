@@ -9,7 +9,7 @@
     </style>
 	</head>
 
-    <button type="button" onclick="reqRoomClicked()" id="requestRoom" class="gamebutton">Start Game</button>
+    <button type="button" id="requestRoom" class="gamebutton">Start Game</button>
     <button type="button" id="joinRoom" class="gamebutton">Join Game</button>
 
 
@@ -17,22 +17,31 @@
       
     </div>
 
-    <!--<script src="/socket.io/socket.io.js"
+    <script src="/socket.io/socket.io.js"
     ></script>
-    <script>var socket = io();</script> -->
     <script>
     	const socket = io();
 
+    	var returnName = document.getElementById("NameSpace");
+    	var reqRoomButton = document.getElementById("requestRoom");
+    	reqRoomButton.addEventListener("click", reqRoomClicked);
+
 		socket.on('returnRoomReq', function(roomName) {
-			var returnName = getElementById("NameSpace");
-			var nameString = createElement("p");
+			var nameString = document.createElement("p");
 			nameString.innerHTML = "The room code is " + roomName;
 			returnName.appendChild(nameString);
 		});
 
-		reqRoomClicked() {
+		socket.on('invalidRoom', function (errStr) {
+			var newErrMsg = document.createElement("p");
+			newErrMsg.innerHTML = errStr;
+			returnName.appendChild(newErrMsg);
+		})
+
+		function reqRoomClicked() {
 			socket.emit('requestRoom', 'need a room');
-		}
+			console.log("request for room sent");
+		};
 	</script>
   </body>
   </html> 
