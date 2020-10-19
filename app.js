@@ -22,6 +22,7 @@ var path = require('path');
 var serv = http.createServer(app);
 
 var rooms = [];
+var clients = [];
 
 // route handler that gets called when we hit our website home
 app.get('/', function(req, res) {
@@ -37,31 +38,60 @@ serv.listen(3000, () => {
 var io = require('socket.io')(serv);
 io.on('connection', function(socket) {
 	console.log('socket connection');
+
+	socket.on('requestRoom' function (socket) {
+		var randNum = Math.floor(Math.random() * 1000);
+		var randName = randNum.toString();
+		var newRoom = {
+			numPlayers: 1,
+			numTurns: 0,
+			name: randName,
+			notebooks: [],
+			sockets: []
+		};
+
+		newRoom.sockets.push(socket.id);
+
+		// create a new notebook for the requesting socket:
+		var newNoteBook = {
+			playerid: socket.id,
+			drawings: [],
+			guesses: [],
+			ogWord: null,
+			playerPlace: 1
+		}
+		(newRoom.notebooks).push(newNoteBook);
+		rooms.push(newRoom);
+
+		socket.join(randName);
+
+		socket.emit('returnRoomReq', randName);
+	});
 });
 
-io.on('requestRoom' function (socket) {
-	var randNum = Math.floor(Math.random() * 1000);
-	var randName = randNum.toString();
-	var newRoom = {
-		numPlayers: 1,
-		numTurns: 0,
-		name: randName,
-		notebooks: []
-	};
 
-	// create a new notebook for the requesting socket:
+socket.on('joinRoom' function (roomName) {
+	var roomToJoin;
+	for (i=0; i<rooms.length; i++) {
+		if (rooms[i].name.equals(roomName)) {
+			// store in variable
+			roomToJoin = rooms[i];
+			break;
+		}
+	}
+
+	roomToJoin.numPlayers = (roomToJoin.numPlayers) + 1;
+	roomToJoin.sockets.push(socket.id);
+
+	// create a new notebook for the new player
 	var newNoteBook = {
 		playerid: socket.id,
 		drawings: [],
 		guesses: [],
 		ogWord: null,
-		playerPlace: 1
+		playerPlace: (roomToJoin.numPlayers + 1)
 	}
-	(newRoom.notebooks).push(newNoteBook);
-	rooms.pugh(newRoom);
 
-	socket.join(randName);
-
-	socket.emit('returnRoomReq', randName);
+	roomToJoin.notebooks.push(newNoteBook);
+	rooms[i] = roomToJoin;
 });
-io.on('joinRoom' function)
