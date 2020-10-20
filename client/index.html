@@ -9,40 +9,25 @@
     </style>
 	</head>
 
-    <button type="button" id="requestRoom" class="gamebutton">Start Game</button>
-    <button type="button" id="joinRoom" class="gamebutton">Join Game</button>
+	<div id="beforeGame">
+	    <button type="button" id="requestRoom" class="gamebutton">Start Room</button>
+	    <input type="text" placeholder="enter room name here" id="roomCode" >
+	    <button type="button" id="joinGameButton">Join Game</button>
+	    <button type="button" id="tempTest" onClick="location.href='/testPage'">Click here to get to test Page</button>
+	</div>
 
 
-    <div id = "NameSpace">
+    <div id = "nameSpace">
       
     </div>
 
-    <script src="/socket.io/socket.io.js"
-    ></script>
-    <script>
-    	const socket = io();
+    <div id="startGame"> 
+    	<p>Send that code out to your friends, and once they have all connected, click the button below to begin the game :)</p>
+    	<button type="button" id="startGameButton">Begin Game</button>
+    </div>
 
-    	var returnName = document.getElementById("NameSpace");
-    	var reqRoomButton = document.getElementById("requestRoom");
-    	reqRoomButton.addEventListener("click", reqRoomClicked);
-
-		socket.on('returnRoomReq', function(roomName) {
-			var nameString = document.createElement("p");
-			nameString.innerHTML = "The room code is " + roomName;
-			returnName.appendChild(nameString);
-		});
-
-		socket.on('invalidRoom', function (errStr) {
-			var newErrMsg = document.createElement("p");
-			newErrMsg.innerHTML = errStr;
-			returnName.appendChild(newErrMsg);
-		})
-
-		function reqRoomClicked() {
-			socket.emit('requestRoom', 'need a room');
-			console.log("request for room sent");
-		};
-	</script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/client-sock.js"></script>
   </body>
   </html> 
 </html>

@@ -25,11 +25,16 @@ var rooms = [];
 var clients = [];
 
 // route handler that gets called when we hit our website home
+
 app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/client/index.html');
 });
 app.use('/client', express.static(__dirname + '/client'));
 app.use("/js", express.static(path.join(__dirname, "/client")));
+
+app.get('/testPage', function(req, res) {
+	res.sendFile(__dirname + '/client/testPage.html');
+});
 
 serv.listen(3000, () => {
 	console.log("Listening on port 3000");
@@ -64,6 +69,8 @@ io.on('connection', function(socket) {
 		(newRoom.notebooks).push(newNoteBook);
 		rooms.push(newRoom);
 
+		socket.playerPlace = 0;
+
 		socket.join(randName);
 
 		socket.emit('returnRoomReq', randName);
@@ -72,7 +79,8 @@ io.on('connection', function(socket) {
 	socket.on('joinRoom', function (roomName) {
 		var roomToJoin = null;
 		for (i=0; i<rooms.length; i++) {
-			if (rooms[i].name.equals(roomName)) {
+			var currNameStr = rooms[i].name;
+			if (currNameStr.localeCompare(roomName) == 0) {
 				// store in variable
 				roomToJoin = rooms[i];
 				break;
@@ -83,6 +91,8 @@ io.on('connection', function(socket) {
 			socket.emit('invalidRoom', roomName + " is not a valid room, please try again");
 			return;
 		}
+
+		socket.playerPlace = roomToJoin.numPlayers;
 
 		roomToJoin.numPlayers = (roomToJoin.numPlayers) + 1;
 		roomToJoin.sockets.push(socket.id);
@@ -97,6 +107,6 @@ io.on('connection', function(socket) {
 		}
 
 		roomToJoin.notebooks.push(newNoteBook);
-		rooms[i] = roomToJoin;
+		rooms[i] = roomToJoin; 
 	});
 });

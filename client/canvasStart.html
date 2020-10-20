@@ -8,27 +8,34 @@
 	</head>
 
 	<body onload="main()">
-  	<canvas id="myCanvas" width="400" height="400">
- 		   "Please use a browser that supports "canvas"
- 		</canvas>
 
-    <button type="button" id="red" class="colorButton">Red</button>
-    <button type="button" id="green" class="colorButton">Green</button>
-    <button type="button" id="blue" class="colorButton">Blue</button>
-    <button type="button" id="clearButton" >Clear</button>
-    <button type="button" id="submitButton" >Submit</button>
+    <div id="canvasSpace">
+    	<canvas id="myCanvas" width="400" height="400">
+   		   "Please use a browser that supports "canvas"
+   		</canvas>
+
+      <button type="button" id="red" class="colorButton">Red</button>
+      <button type="button" id="green" class="colorButton">Green</button>
+      <button type="button" id="blue" class="colorButton">Blue</button>
+      <button type="button" id="clearButton" >Clear</button>
+      <button type="button" id="submitDrawing" >Submit</button>
+  </div>
+
+  <div id="guessingSpace">
+    <input type="text">
+    <button type="button" id="submitGuess" >Submit</button>
+  </div>
 
     <div id = "submitted">
       
     </div>
 
-    <!--<script src="/socket.io/socket.io.js"
-    ></script>
-    <script>var socket = io();</script> -->
+    <script src="/socket.io/socket.io.js"></script>
   	<script src = "./js/webgl-utils.js"></script>
   	<script src = "./js/webgl-debug.js"></script>
   	<script src = "./js/cuon-utils.js"></script>
     <script src = "./js/draw.js"></script>
+    <script src = "./js/client-sock.js"></script>
   </body>
   </html> 
 </html>
