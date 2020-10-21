@@ -3,7 +3,7 @@ const socket = io();
 var roomIndex;
 var playerNotebook;
 
-var returnName = document.getElementById("nameSpace");
+var nameSpace = document.getElementById("nameSpace");
 var startRoomButton = document.getElementById("requestRoom");
 var befGameDiv = document.getElementById("beforeGame");
 var startGame = document.getElementById("startGame");
@@ -34,30 +34,32 @@ submitDrawing.addEventListener("click", submitDrawingClick);
 submitFirstWord.addEventListener("click", endFirstRound);
 submitGuess.addEventListener("click", submitGuessClick);
 
-
-// initializing hidden elements
-startGame.style.display="none";
-guessingSpace.sytle.display = "none";
-canvasSpace.style.display = "none";
+function main() {
+    // initializing hidden elements
+    startGame.style.display="none";
+    guessingSpace.sytle.display = "none";
+    canvasSpace.style.display = "none";
+}
 
 socket.on('returnRoomReq', function(roomName) {
     window.roomName = roomName;
 	befGameDiv.style.display = "none";
 	var nameString = document.createElement("p");
 	nameString.innerHTML = "The room code is " + roomName;
-	returnName.appendChild(nameString);
+	nameSpace.appendChild(nameString);
 	startGame.style.display="block";
 });
 
 socket.on('invalidRoom', function (errStr) {
 	var newErrMsg = document.createElement("p");
 	newErrMsg.innerHTML = errStr;
-	returnName.appendChild(newErrMsg);
+	nameSpace.appendChild(newErrMsg);
 });
 
 socket.on('firstRound', function(notebook) {
+    window.location.href = '/gamePage';
     window.playerNotebook = notebook;
-    startGame.style.display = "block";
+    startGame.style.display = "none";
 });
 
 socket.on('giveRoomIndex', function(roomIndex) {

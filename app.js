@@ -36,6 +36,10 @@ app.get('/testPage', function(req, res) {
 	res.sendFile(__dirname + '/client/testPage.html');
 });
 
+app.get('/gamePage', function(req, res) {
+	res.sendFile(__dirname + './client/canvasStart.html');
+});
+
 serv.listen(3000, () => {
 	console.log("Listening on port 3000");
 });
@@ -116,7 +120,7 @@ io.on('connection', function(socket) {
 		socket.emit('giveRoomIndex', roomIndex);
 	});
 
-	socket.on('beginGame' function(room) {
+	socket.on('beginGame', function(room) {
 		// get the correct room
 		var targetRoom = rooms[room];
 

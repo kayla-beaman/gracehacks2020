@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+ 		<title>Welcome to the drawing game</title>
+    <style>
+    </style>
+	</head>
+
+	<header id="header">
+		Welcome to the waiting room, please click "start Game" when everyone has arrived
+	</header>
+
+    <button type="button" id="startGame" onClick="location.href='/testPage'">Start Game</button>
+
+
+    <div id = "NameSpace">
+      
+    </div>
+
+    <script src="/socket.io/socket.io.js"
+    ></script>
+    <script>
+    	const socket = io();
+
+    	var returnName = document.getElementById("NameSpace");
+    	var reqRoomButton = document.getElementById("requestRoom");
+    	reqRoomButton.addEventListener("click", reqRoomClicked);
+
+		socket.on('returnRoomReq', function(roomName) {
+			location.href = 'waitingRoom';
+			var nameString = document.createElement("p");
+			nameString.innerHTML = "The room code is " + roomName;
+			returnName.appendChild(nameString);
+		});
+
+		socket.on('invalidRoom', function (errStr) {
+			var newErrMsg = document.createElement("p");
+			newErrMsg.innerHTML = errStr;
+			returnName.appendChild(newErrMsg);
+		});
+
+		function reqRoomClicked() {
+			socket.emit('requestRoom', 'need a room');
+			console.log("request for room sent");
+		};
+	</script>
+  </body>
+  </html> 
+</html>

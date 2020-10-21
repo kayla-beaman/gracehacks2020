@@ -52,7 +52,7 @@ var FSHADER_SOURCE =
 
 var isMouseDown = false;
 var g_points = [];
-var pics = [];
+var currNoteBook = [];
 
 function main() {
 	var myCanvas = document.getElementById('myCanvas');
@@ -111,9 +111,14 @@ function main() {
 		clearCanvas(gl);
 	});
 
-	var submitButton = document.getElementById("submitButton");
+	var submitDrawing = document.getElementById("submitDrawing");
 	submitButton.addEventListener("click", function () {
 		submitDrawing(myCanvas);
+	});
+
+	var submitGuess = document.getElementById("submitGuess");
+	submitGuess.addEventListener("click", function () {
+		submitGuess();
 	});
 
 	myCanvas.onmousedown = function(ev) {
