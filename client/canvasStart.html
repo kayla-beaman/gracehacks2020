@@ -9,6 +9,18 @@
 
 	<body onload="main()">
 
+    <div id="firstRoundSpace">
+      <p>Please put in the word that you will draw</p>
+      <input type="text" id="firstWordField">
+      <button type="button" id="submitFirstWorld"></button>
+    </div>
+
+      <div id="guessingSpace">
+        <p>What do you think this is? Put your answer in the field below</p>
+        <input type="text" id="guessingField">
+        <button type="button" id="submitGuess" >Submit</button>
+      </div>
+
     <div id="canvasSpace">
     	<canvas id="myCanvas" width="400" height="400">
    		   "Please use a browser that supports "canvas"
@@ -21,12 +33,7 @@
       <button type="button" id="submitDrawing" >Submit</button>
   </div>
 
-  <div id="guessingSpace">
-    <input type="text">
-    <button type="button" id="submitGuess" >Submit</button>
-  </div>
-
-    <div id = "submitted">
+    <div id = "endResultsSpace">
       
     </div>
 
