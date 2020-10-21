@@ -68,21 +68,24 @@ io.on('connection', function(socket) {
 		};
 		(newRoom.notebooks).push(newNoteBook);
 		rooms.push(newRoom);
+		var roomIndex = rooms.length-1;
 
 		socket.playerPlace = 0;
 
 		socket.join(randName);
 
-		socket.emit('returnRoomReq', randName);
+		socket.emit('returnRoomReq', randName, roomIndex);
 	});
 
 	socket.on('joinRoom', function (roomName) {
 		var roomToJoin = null;
+		var roomIndex;
 		for (i=0; i<rooms.length; i++) {
 			var currNameStr = rooms[i].name;
 			if (currNameStr.localeCompare(roomName) == 0) {
 				// store in variable
 				roomToJoin = rooms[i];
+				roomIndex = i;
 				break;
 			}
 		}
@@ -103,10 +106,66 @@ io.on('connection', function(socket) {
 			drawings: [],
 			guesses: [],
 			ogWord: null,
+			waiting: 0,
 			playerPlace: (roomToJoin.numPlayers + 1)
 		}
 
 		roomToJoin.notebooks.push(newNoteBook);
-		rooms[i] = roomToJoin; 
+		rooms[roomIndex] = roomToJoin;
+
+		socket.emit('giveRoomIndex', roomIndex);
 	});
+
+	socket.on('beginGame' function(room) {
+		// get the correct room
+		var targetRoom = rooms[room];
+
+		var sockNotebkIndex = Math.abs( targetRoom.numPlayers - (socket.playerPlace + targetRoom.numTurns) );
+		
+		// send out notebooks to each of the sockets in the room
+		io.to(targetRoom.name).emit('firstRound', targetRoom.notebooks[sockNotebkIndex]);
+	});
+
+	socket.on('doneGuessing', function (playerNotebook, roomIndex) {
+		rooms[roomIndex].waiting = rooms[roomIndex] + 1;
+		while (rooms[roomIndex].waiting < rooms[roomIndex].numPlayers) {
+			// do nothing
+		}
+		// add the notebooks to the room
+		var targetRoom = rooms[roomIndex];
+		var sockNotebkIndex = Math.abs( targetRoom.numPlayers - (socket.playerPlace + targetRoom.numTurns) );
+		targetRoom.notebooks[sockNotebkIndex] = playerNotebook;
+		targetRoom.numTurns = targetRoom.numTurns + 1;
+		if (targetRoom.numTurns == targetRoom.numPlayers) {
+			// call the endgame and return
+			(function () {
+				// send each player their own notebooks :)
+				io.to(targetRoom.name).emit('gameEnd', targetRoom.notebooks[socket.playerPlace]);
+			})()
+			return;
+		}
+		// get the next notebook for the players
+		sockNotebkIndex = Math.abs( targetRoom.numPlayers - (socket.playerPlace + targetRoom.numTurns) );
+		io.to(targetRoom.name).emit('beginDrawing', targetRoom.notebooks[sockNotebkIndex]);
+	});
+
+	socket.on('doneDrawing', function (playerNotebook, roomIndex) {
+		// set the global notebooks
+		var targetRoom = rooms[roomIndex];
+		var sockNotebkIndex = Math.abs( targetRoom.numPlayers - (socket.playerPlace + targetRoom.numTurns) );
+		targetRoom.notebooks[sockNotebkIndex] = playerNotebook;
+		targetRoom.numTurns = targetRoom.numTurns + 1;
+		if (targetRoom.numTurns == targetRoom.numPlayers) {
+			// call the endgame and return
+			(function () {
+				// send each player their own notebooks :)
+				io.to(targetRoom.name).emit('gameEnd', targetRoom.notebooks[socket.playerPlace]);
+			})()
+			return;
+		}
+		// get the next notebook for the players
+		rooms[roomIndex] = targetRoom;
+		sockNotebkIndex = Math.abs( targetRoom.numPlayers - (socket.playerPlace + targetRoom.numTurns) );
+		io.to(targetRoom.name).emit('beginGuessing', targetRoom.notebooks[sockNotebkIndex]);
+	})
 });
