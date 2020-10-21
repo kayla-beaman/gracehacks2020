@@ -5,8 +5,8 @@ var playerNotebook;
 
 var nameSpace = document.getElementById("nameSpace");
 var startRoomButton = document.getElementById("requestRoom");
-var befGameDiv = document.getElementById("beforeGame");
-var startGame = document.getElementById("startGame");
+var beforeGameSpace = document.getElementById("beforeGameSpace");
+var startGameSpace = document.getElementById("startGameSpace");
 var joinGameButton = document.getElementById("joinGameButton");
 var roomCode = document.getElementById("roomCode");
 
@@ -16,7 +16,7 @@ var startGameButton = document.getElementById("startGameButton");
 //startGameButton.addEventListener("click", beginGame);
 joinGameButton.addEventListener("click", joinGame);
 startRoomButton.addEventListener("click", reqRoomClicked);
-startGameButton.addEventListener("click", );
+startGameButton.addEventListener("click", beginGameSignal);
 
 // elements to be used once the game starts
 var playerCanvas = document.getElementById("myCanvas");
@@ -36,14 +36,14 @@ submitGuess.addEventListener("click", submitGuessClick);
 
 function main() {
     // initializing hidden elements
-    startGame.style.display="none";
+    startGameSpace.style.display="none";
     guessingSpace.sytle.display = "none";
     canvasSpace.style.display = "none";
 }
 
 socket.on('returnRoomReq', function(roomName) {
     window.roomName = roomName;
-	befGameDiv.style.display = "none";
+	beforeGameSpace.style.display = "none";
 	var nameString = document.createElement("p");
 	nameString.innerHTML = "The room code is " + roomName;
 	nameSpace.appendChild(nameString);
