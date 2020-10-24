@@ -42,7 +42,6 @@ var VSHADER_SOURCE =
 // Fragment Shader Program
 /*A program that deals with per-fragment processing such as lighting.
 The fragment is a webgl term that you can consider as a kind of pixel*/
-// '	uniform vec4 u_FragColor;\n' +
 var FSHADER_SOURCE =
 	'precision mediump float;\n' +
 	'uniform vec4 u_FragColor;\n' +
@@ -111,15 +110,15 @@ function main() {
 		clearCanvas(gl);
 	});
 
-	var submitDrawing = document.getElementById("submitDrawing");
-	submitButton.addEventListener("click", function () {
-		submitDrawing(myCanvas);
+	var submitDrawingButton = document.getElementById("submitDrawingButton");
+	submitDrawingButton.addEventListener("click", function () {
+		clearCanvas(gl);
 	});
 
-	var submitGuess = document.getElementById("submitGuess");
+/*	var submitGuess = document.getElementById("submitGuess");
 	submitGuess.addEventListener("click", function () {
 		submitGuess();
-	});
+	});*/
 
 	myCanvas.onmousedown = function(ev) {
 		isMouseDown = true;
@@ -143,7 +142,7 @@ function main() {
 
 }
 
-function submitDrawing(myCanvas) {
+/*function submitDrawing(myCanvas) {
 	var subDiv = document.getElementById("submitted");
 	var drawing = myCanvas.toDataURL();
 	console.log("image submitted");
@@ -153,7 +152,7 @@ function submitDrawing(myCanvas) {
 	subDiv.appendChild(newImg);
 	console.log("html element created");
 	//document.insertBefore(newImg, myCanvas);
-}
+}*/
 
 function createEvent(button, gl, u_FragColor) {
 	var currColor = button.id;

@@ -1,53 +1,99 @@
 const socket = io();
 
 var roomIndex;
+var roomName;
 var playerNotebook;
 
-var nameSpace = document.getElementById("nameSpace");
-var startRoomButton = document.getElementById("requestRoom");
-var beforeGameSpace = document.getElementById("beforeGameSpace");
-var startGameSpace = document.getElementById("startGameSpace");
-var joinGameButton = document.getElementById("joinGameButton");
-var roomCode = document.getElementById("roomCode");
+// html divs
+var nameSpace;
+var beforeGameSpace;
+var startRoomButton;
+var startGameSpace;
+var guessingSpace;
+var canvasSpace;
+var firstRoundSpace;
+var endResultsSpace;
 
-// elements for when the host is in the waiting room
-var startGameButton = document.getElementById("startGameButton");
+// buttons
+var joinGameButton;
+var startGameButton;
+var submitDrawingButton;
+var submitFirstWord;
+var submitGuess;
 
-//startGameButton.addEventListener("click", beginGame);
-joinGameButton.addEventListener("click", joinGame);
-startRoomButton.addEventListener("click", reqRoomClicked);
-startGameButton.addEventListener("click", beginGameSignal);
+// text input fields
+var roomCodeField;
+var firstWordField;
+var guessingField;
 
-// elements to be used once the game starts
-var playerCanvas = document.getElementById("myCanvas");
-var submitDrawing = document.getElementById("submitDrawing");
-var guessingSpace = document.getElementById("guessingSpace");
-var canvasSpace = document.getElementById("canvasSpace");
-var firstRoundSpace = document.getElementById("firstRoundSpace");
-var firstWordField = document.getElementById("firstWordField");
-var submitFirstWord = document.getElementById("submitFirstWord");
-var guessingField = document.getElementById("guessingField");
-var submitGuess = document.getElementById("submitGuess");
-var endResultsSpace = document.getElementById("endResultsSpace");
+// prev image/guess
+var picToGuess;
+var guessToDraw;
 
-submitDrawing.addEventListener("click", submitDrawingClick);
-submitFirstWord.addEventListener("click", endFirstRound);
-submitGuess.addEventListener("click", submitGuessClick);
+// html5 canvas
+var playerCanvas;
 
-function main() {
-    // initializing hidden elements
-    startGameSpace.style.display="none";
-    guessingSpace.sytle.display = "none";
-    canvasSpace.style.display = "none";
+function mainPage() {
+    // html divs
+        beforeGameSpace = document.getElementById("beforeGameSpace");
+        startGameSpace = document.getElementById("startGameSpace");
+        nameSpace = document.getElementById("nameSpace");
+
+        // buttons in index.html
+        startRoomButton = document.getElementById("requestRoom");
+        joinGameButton = document.getElementById("joinGameButton");
+        startGameButton = document.getElementById("startGameButton");
+
+        roomCodeField = document.getElementById("roomCodeField");
+
+            // initializing hidden elements
+        joinGameButton.addEventListener("click", joinGame);
+        startRoomButton.addEventListener("click", reqRoomClicked);
+        startGameButton.addEventListener("click", beginGameSignal);
+        startGameSpace.style.display="none";
+
+
+            // html divs once the game has started
+        guessingSpace = document.getElementById("guessingSpace");
+        canvasSpace = document.getElementById("canvasSpace");
+        firstRoundSpace = document.getElementById("firstRoundSpace");
+        waitMessageSpace = document.getElementById("waitMessageSpace");
+        endResultsSpace = document.getElementById("endResultsSpace");
+
+        // buttons
+        submitFirstWord = document.getElementById("submitFirstWord");
+        submitDrawingButton = document.getElementById("submitDrawingButton");
+        submitGuess = document.getElementById("submitGuess");
+
+        // text field inputs
+        firstWordField = document.getElementById("firstWordField");
+        guessingField = document.getElementById("guessingField");
+
+        playerCanvas = document.getElementById("myCanvas");
+
+        picToGuess = document.getElementById("guessPic");
+        guessToDraw = document.getElementById("drawGuess");
+
+        submitDrawingButton.addEventListener("click", submitDrawingClick);
+        submitFirstWord.addEventListener("click", endFirstRound);
+        submitGuess.addEventListener("click", submitGuessClick);
+
+        canvasSpace.style.display = "none";
+        firstRoundSpace.style.display = "none";
+        guessingSpace.style.display = "none";
+        waitMessageSpace.style.display = "none";
+        endResultsSpace.style.display = "none";
+        picToGuess.style.display = "none";
+        guessToDraw.style.display = "none";
 }
 
 socket.on('returnRoomReq', function(roomName) {
     window.roomName = roomName;
 	beforeGameSpace.style.display = "none";
 	var nameString = document.createElement("p");
-	nameString.innerHTML = "The room code is " + roomName;
+	nameString.innerHTML = "The room code is " + window.roomName;
 	nameSpace.appendChild(nameString);
-	startGame.style.display="block";
+	startGameSpace.style.display="block";
 });
 
 socket.on('invalidRoom', function (errStr) {
@@ -57,32 +103,52 @@ socket.on('invalidRoom', function (errStr) {
 });
 
 socket.on('firstRound', function(notebook) {
-    window.location.href = '/gamePage';
+    console.log(`notebook's guesses length is ${notebook.guesses.length}`);
     window.playerNotebook = notebook;
-    startGame.style.display = "none";
+    startGameSpace.style.display = "none";
+    beforeGameSpace.style.display = "none";
+    nameSpace.style.display = "none";
+    console.log("firstRound recieved");
+
+    firstRoundSpace.style.display = "block";
+    guessingSpace.style.display = "none";
+    canvasSpace.style.display = "none";
 });
 
-socket.on('giveRoomIndex', function(roomIndex) {
-    window.roomIndex = roomIndex;
+socket.on('drawYourWord', function (notebook) {
+    waitMessageSpace.style.display = "none";
+    canvasSpace.style.display = "block";
+    window.playerNotebook = notebook;
 });
 
 socket.on('beginDrawing', function (notebook) {
+    waitMessageSpace.style.display = "none";
     window.playerNotebook = notebook;
     canvasSpace.style.display = "block";
+    var len = notebook.guesses.length;
+    guessToDraw.style.display = "block";
+    guessToDraw.innerHTML = "Draw this: " + notebook.guesses[len - 1];
 });
 
 socket.on('beginGuessing', function(notebook) {
+    waitMessageSpace.style.display = "none";
     window.playerNotebook = notebook;
     guessingSpace.style.display = "block";
+    var len = notebook.drawings.length;
+    picToGuess.style.display = "block";
+    picToGuess.src = notebook.drawings[len - 1];
 });
 
 socket.on('endGame', function (notebook) {
+    console.log(`recieved endGame`);
     if (canvasSpace.style.display == "block") {
         canvasSpace.style.display = "none";
     }
     if (guessingSpace.style.display == "block") {
         guessingSpace.style.display = "none";
     }
+    waitMessageSpace.style.display = "none";
+    endResultsSpace.style.display = "block";
     // loop through each of the drawings and guesses
     var drawingsLen = notebook.drawings.length;
     var guessesLen = notebook.guesses.length;
@@ -109,39 +175,49 @@ socket.on('endGame', function (notebook) {
     }
 });
 
-function joinGame () {
+function joinGame() {
     // get the value of the text field
-    roomName = roomCode.value;
-    socket.emit('joinRoom', roomName);
-    console.log(`a client joined room ${roomName}`);
+    window.roomName = roomCodeField.value;
+    startGameSpace.style.display = "none";
+    beforeGameSpace.style.display = "none";
+    var waitMsg = document.createElement("p");
+    waitMsg.innerHTML = "Please wait for the host to start the game";
+    nameSpace.appendChild(waitMsg);
+    socket.emit('joinRoom', window.roomName);
+    console.log(`a client joined room ${window.roomName}`);
 }
 
-function submitDrawingClick () {
+function submitDrawingClick() {
     var playerDrawing = playerCanvas.toDataURL();
-    playerNotebook.push(playerDrawing);
-    socket.emit('doneDrawing', playerNotebook, roomIndex);
+    playerNotebook.drawings.push(playerDrawing);
     canvasSpace.style.display = "none";
+    waitMessageSpace.style.display = "block"
+    socket.emit('doneDrawing', playerNotebook, window.roomName);
 }
 
-function submitGuessClick () {
+function submitGuessClick() {
     var playerGuess = guessingField.value;
     playerNotebook.guesses.push(playerGuess);
-    socket.emit();
+    guessingSpace.style.display = "none";
+    waitMessageSpace.style.display = "block";
+    socket.emit('doneGuessing', playerNotebook, window.roomName);
 }
 
 // triggered when a client clicks on "start room"
 function reqRoomClicked() {
 	socket.emit('requestRoom', 'need a room');
 	console.log("request for room sent");
-};
+}
 
 // triggered when the host clicks the "begin game" button
 function beginGameSignal() {
-    socket.emit('beginGame', roomIndex);
+    console.log(`client: beginGameSignal: room index is ${window.roomName}`);
+    socket.emit('beginGame', window.roomName);
 }
 
 function endFirstRound() {
     playerNotebook.guesses.push(firstWordField.value);
-    socket.emit('doneGuessing', playerNotebook, roomIndex);
-    startGame.style.display = "none";
+    firstRoundSpace.style.display = "none";
+    waitMessageSpace.style.display = "block";
+    socket.emit('endFirstRound', playerNotebook, window.roomName);
 }

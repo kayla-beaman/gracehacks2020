@@ -9,10 +9,10 @@
     </style>
 	</head>
 
-	<body onload="main()">
-	<div id="beforeGame">
+	<body onload="mainPage()">
+	<div id="beforeGameSpace">
 	    <button type="button" id="requestRoom" class="gamebutton">Start Room</button>
-	    <input type="text" placeholder="enter room name here" id="roomCode" >
+	    <input type="text" placeholder="enter room name here" id="roomCodeField" >
 	    <button type="button" id="joinGameButton">Join Game</button>
 	    <button type="button" id="tempTest" onClick="location.href='/testPage'">Click here to get to test Page</button>
 	</div>
@@ -22,7 +22,7 @@
       
     </div>
 
-    <div id="startGame"> 
+    <div id="startGameSpace"> 
     	<p>Send that code out to your friends, and once they have all connected, click the button below to begin the game :)</p>
     	<button type="button" id="startGameButton">Begin Game</button>
     </div>
