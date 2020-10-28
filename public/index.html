@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+ 		<title>Draw (canvas version)</title>
+    <style>
+    </style>
+	</head>
+
+	<body onload = "mainPage(); main()">
+
+    <div id="mainScreen">
+      <div id="beforeGameSpace">
+        <button type="button" id="requestRoom" class="gamebutton">Start Room</button>
+        <input type="text" placeholder="enter room name here" id="roomCodeField" >
+        <button type="button" id="joinGameButton">Join Game</button>
+        <button type="button" id="tempTest" onClick="location.href='/testPage'">Click here to get to test Page</button>
+      </div>
+
+
+      <div id = "nameSpace">
+        
+      </div>
+
+      <div id="startGameSpace"> 
+        <p>Send that code out to your friends, and once they have all connected, click the button below to begin the game :)</p>
+        <button type="button" id="startGameButton">Begin Game</button>
+      </div>
+    </div>
+
+
+    <div id="gamePage">
+
+      <div id="firstRoundSpace">
+        <p>Please put in the word that you will draw</p>
+        <input type="text" id="firstWordField">
+        <button type="button" id="submitFirstWord">Submit</button>
+      </div>
+
+      <div id="waitMessageSpace">Waiting for the other players...</div>
+
+        <div id="guessingSpace">
+          <img id="guessPic">
+          <p>What do you think this is? Put your answer in the field below</p>
+          <input type="text" id="guessingField">
+          <button type="button" id="submitGuess" >Submit</button>
+        </div>
+
+      <div id="canvasSpace">
+        <p id="drawGuess"></p>
+      	<canvas id="myCanvas" width="400" height="400">
+     		   "Please use a browser that supports "canvas"
+     		</canvas>
+
+        <button type="button" id="red" class="colorButton">Red</button>
+        <button type="button" id="green" class="colorButton">Green</button>
+        <button type="button" id="blue" class="colorButton">Blue</button>
+        <button type="button" id="clearButton" >Clear</button>
+        <button type="button" id="submitDrawingButton" >Submit</button>
+      </div>
+
+      <div id = "endResultsSpace">
+        
+      </div>
+
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+  	<script src = "./js/webgl-utils.js"></script>
+  	<script src = "./js/webgl-debug.js"></script>
+  	<script src = "./js/cuon-utils.js"></script>
+    <script src = "./js/draw.js"></script>
+    <script src = "./js/client-sock.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/7.24.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/7.24.0/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+  </body>
+  </html> 
+</html>

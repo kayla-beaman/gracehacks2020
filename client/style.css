@@ -1,0 +1,254 @@
+/* css style file for telestrations */
+
+p {
+	font-family: "Arial Black", Charcoal, sans-serif;
+	color: #B04B8D;
+	text-align: center;
+}
+
+.colorButton {
+	border: 3px solid #913B97;
+	border-radius: 50%;
+	height: 1rem;
+	width: 1rem;
+	padding: 1rem;
+	margin-top: 1rem;
+}
+
+.colorButton:active {
+	border-color: #FEF1FF;
+}
+
+.colorButton:hover {
+	box-shadow: 2px 2px 7px 3px pink, 2px 2px 7px 3px pink;
+}
+
+.canvasB {
+	background-color: #F8BDFF;
+	border: 1px solid #FF7AE2;
+	padding: 5px;
+	margin-top: 1rem;
+}
+
+.canvasB:hover {
+	cursor: pointer;
+}
+
+.startButton {
+	padding: 20px;
+	margin-bottom: 2rem;
+	text-align: center;
+	font-family: "Arial Black", Charcoal, sans-serif;
+	font-weight: bold;
+	color: #F0F0F0;
+	border: none;
+	background-color: #F8BDFF;
+	cursor: pointer;
+	transition: all 0.5s;
+	width: 10rem;
+	height: 4rem;
+}
+
+.startButton span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+}
+
+.startButton span::after {
+	content: "->";
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	transition: 0.5s;
+	right: -1rem;
+}
+
+.startButton:hover span {
+	padding-right: 2rem;
+}
+
+.startButton:hover span::after {
+	opacity: 1;
+	right: 0;
+}
+
+.elementsContainer {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: stretch;
+	background-color: white;
+	padding: 1rem;
+}
+
+.mainScnP {
+	font-family: "Arial Black", Charcoal, sans-serif;
+	color: #B04B8D;
+	padding: 1rem;
+}
+
+#beforeGameSpace {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: space-between;
+	align-items: baseline;
+	background-color: white;
+	align-self: center;
+	box-sizing: border-box;
+	vertical-align: center;
+}
+
+#joinRoomSpace {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	padding: 2rem;
+	text-align: center;
+	align-items: center;
+}
+
+#startRoomButtonSpace {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	padding: 2rem;
+	text-align: center;
+}
+
+#requestRoom {
+	margin-top: 1rem;
+}
+
+#roomCodeField {
+	width: 10rem;
+	height: 2rem;
+	margin-bottom: 20px;
+	border: 5px solid #FFE4FF;
+}
+
+#hostCodeSpace {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+	background-color: white;
+}
+
+#nameSpace {
+	font-family: "Arial Black", Charcoal, sans-serif;
+	font-size: 4rem;
+	color: #C349D0;
+	padding: 1rem;
+}
+
+#startGameSpace {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	align-content: center;
+}
+
+#startGameButton {
+	position: relative;
+	align-self: center;
+	width: 11rem;
+}
+
+#waitMessageSpace {
+	background-color: white;
+}
+
+#buttonDiv {
+	display: flex;
+	justify-content: center;
+}
+
+#gamePage {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	margin-right: 15%;
+	margin-left: 15%;
+	/*background-color: #64486C;*/
+}
+
+#firstRoundSpace {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: white;
+	padding: 1rem;
+}
+
+#firstWordField {
+	width: 12rem;
+	height: 2rem;
+	margin-bottom: 20px;
+	border: 5px solid #FFE4FF;
+}
+
+#guessingField {
+	width: 12rem;
+	height: 2rem;
+	margin-bottom: 20px;
+	border: 5px solid #FFE4FF;
+}
+
+#canvasSpace {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	background-color: white;
+	align-self: center;
+	padding: 10px;
+}
+
+#colorBar {
+	background-color: #FFE4FF;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-evenly;
+	align-items: flex-start;
+	margin-top: 1rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	padding-bottom: 2rem;
+}
+
+#red {
+	background-color: #FF0000;
+}
+
+#green {
+	background-color: #00FF00;
+}
+
+#blue {
+	background-color: #0000FF;
+}
+
+#pencilsBackground {
+	object-fit: cover;
+}
+
+body {
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: center;
+	align-items: center;
+	background-image: url("./images/pencilsBackground.jpg");
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: repeat-y;
+	width: 100%;
+	height: 100%;
+}
+
+html {
+	height: 100%;
+}

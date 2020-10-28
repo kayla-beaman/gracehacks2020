@@ -25,7 +25,6 @@ var submitGuess;
 var roomCodeField;
 var firstWordField;
 var guessingField;
-var chosenWordField;
 
 // prev image/guess
 var picToGuess;
@@ -70,8 +69,6 @@ function mainPage() {
         firstWordField = document.getElementById("firstWordField");
         guessingField = document.getElementById("guessingField");
 
-        chosenWordField = document.getElementById("chosenWordField");
-
         playerCanvas = document.getElementById("myCanvas");
 
         picToGuess = document.getElementById("guessPic");
@@ -94,7 +91,7 @@ socket.on('returnRoomReq', function(roomName) {
     window.roomName = roomName;
 	beforeGameSpace.style.display = "none";
 	var nameString = document.createElement("p");
-	nameString.innerHTML = "The room code is \n" + window.roomName;
+	nameString.innerHTML = "The room code is " + window.roomName;
 	nameSpace.appendChild(nameString);
 	startGameSpace.style.display="block";
 });
@@ -121,7 +118,6 @@ socket.on('firstRound', function(notebook) {
 socket.on('drawYourWord', function (notebook) {
     waitMessageSpace.style.display = "none";
     canvasSpace.style.display = "block";
-    chosenWordField.innerHTML = "Draw your word: " + notebook.guesses[0];
     window.playerNotebook = notebook;
 });
 
@@ -168,7 +164,7 @@ socket.on('endGame', function (notebook) {
     for (i=1; i<(drawingsLen + guessesLen); i++) {
         if (notebook.guesses[i] != null) {
             tempElement = document.createElement("p");
-            tempElement.innerHTML = "The player's guess: " + notebook.guesses[i];
+            tempElement.innerHTML = "Here is what they guessed:" + notebook.guesses[i];
             endResultsSpace.appendChild(tempElement);
         }
         if (notebook.drawings[i] != null) {

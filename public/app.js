@@ -32,7 +32,6 @@ app.get('/', function(req, res) {
 });
 app.use('/client', express.static(__dirname + '/client'));
 app.use('/js', express.static(path.join(__dirname, '/client')));
-app.use('/image', express.static(__dirname + '/client/images'));
 
 app.get('/testPage', function(req, res) {
 	res.sendFile(__dirname + '/client/testPage.html');
@@ -169,7 +168,6 @@ io.on('connection', function(socket) {
 					currSockid = targetRoom.notebooks[j].sockid;
 					io.to(currSockid).emit('endGame', targetRoom.notebooks[currPlayerPlace]);
 				}
-				rooms[roomName] = null;
 				return;
 			}
 			targetRoom.waiting = 0;

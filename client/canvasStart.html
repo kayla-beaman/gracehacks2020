@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+    <link rel="stylesheet" href="/client/style.css">
 		<meta charset="utf-8" />
  		<title>Draw (canvas version)</title>
     <style>
@@ -11,21 +12,29 @@
 
     <div id="mainScreen">
       <div id="beforeGameSpace">
-        <button type="button" id="requestRoom" class="gamebutton">Start Room</button>
-        <input type="text" placeholder="enter room name here" id="roomCodeField" >
-        <button type="button" id="joinGameButton">Join Game</button>
-        <button type="button" id="tempTest" onClick="location.href='/testPage'">Click here to get to test Page</button>
+        <div id="startRoomButtonSpace">
+          <p class="mainScnP">Obtain a room code and send to your friends</p>
+          <button type="button" id="requestRoom" class="startButton"><span>Start Room</span></button>
+        </div>
+        <div id="joinRoomSpace">
+          <p class="mainScnP">Have a code? Enter it below and join the room</p>
+          <input type="text" placeholder="enter room code here" id="roomCodeField" >
+          <button type="button" id="joinGameButton" class="startButton"><span>Join Room</span></button>
+        </div>
       </div>
 
 
-      <div id = "nameSpace">
-        
+      <div id="hostCodeSpace">
+        <div id = "nameSpace">
+          
+        </div>
+
+        <div id="startGameSpace"> 
+          <p>Send that code out to your friends<br>and once they have all connected, click the button below to begin the game :)</p>
+          <div id="buttonDiv"><button type="button" id="startGameButton" class="startButton"><span>Begin Game</span></button></div>
+        </div>
       </div>
 
-      <div id="startGameSpace"> 
-        <p>Send that code out to your friends, and once they have all connected, click the button below to begin the game :)</p>
-        <button type="button" id="startGameButton">Begin Game</button>
-      </div>
     </div>
 
 
@@ -37,29 +46,34 @@
         <button type="button" id="submitFirstWord">Submit</button>
       </div>
 
-      <div id="waitMessageSpace">Waiting for the other players...</div>
+      <div id="waitMessageSpace" class="mainScnP"><p>Waiting for the other players...</p></div>
 
-        <div id="guessingSpace">
-          <img id="guessPic">
-          <p>What do you think this is? Put your answer in the field below</p>
-          <input type="text" id="guessingField">
-          <button type="button" id="submitGuess" >Submit</button>
+      <div class="elementsContainer">
+          <div id="guessingSpace" class="elementsContainer">
+            <img id="guessPic">
+            <p>What do you think this is? Put your answer in the field below</p>
+            <input type="text" id="guessingField">
+            <button type="button" id="submitGuess" >Submit</button>
+          </div>
+
+        <div id="canvasSpace" class="elementsContainer">
+          <p id="chosenWordField"></p>
+          <p id="drawGuess"></p>
+        	<canvas id="myCanvas" width="400" height="400">
+       		   "Please use a browser that supports "canvas"
+       		</canvas>
+
+          <div id="colorBar">
+            <button type="button" id="red" class="colorButton"></button>
+            <button type="button" id="green" class="colorButton"></button>
+            <button type="button" id="blue" class="colorButton"></button>
+            <button type="button" id="clearButton" class="canvasB">Clear</button>
+            <button type="button" id="submitDrawingButton" class="canvasB">Submit</button>
+          </div>
         </div>
-
-      <div id="canvasSpace">
-        <p id="drawGuess"></p>
-      	<canvas id="myCanvas" width="400" height="400">
-     		   "Please use a browser that supports "canvas"
-     		</canvas>
-
-        <button type="button" id="red" class="colorButton">Red</button>
-        <button type="button" id="green" class="colorButton">Green</button>
-        <button type="button" id="blue" class="colorButton">Blue</button>
-        <button type="button" id="clearButton" >Clear</button>
-        <button type="button" id="submitDrawingButton" >Submit</button>
       </div>
 
-      <div id = "endResultsSpace">
+      <div id = "endResultsSpace" class="elementsContainer">
         
       </div>
 
@@ -72,5 +86,6 @@
     <script src = "./js/draw.js"></script>
     <script src = "./js/client-sock.js"></script>
   </body>
+  <!-- <img id="pencilsBackground" src = "./image/pencilsBackground.jpg"> -->
   </html> 
 </html>
