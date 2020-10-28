@@ -161,6 +161,7 @@ p {
 
 #waitMessageSpace {
 	background-color: white;
+	font-size: 1rem;
 }
 
 #buttonDiv {
@@ -218,6 +219,10 @@ p {
 	padding-left: 2rem;
 	padding-right: 2rem;
 	padding-bottom: 2rem;
+}
+
+#white {
+	background-color: white;
 }
 
 #red {

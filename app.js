@@ -34,10 +34,6 @@ app.use('/client', express.static(__dirname + '/client'));
 app.use('/js', express.static(path.join(__dirname, '/client')));
 app.use('/image', express.static(__dirname + '/client/images'));
 
-app.get('/testPage', function(req, res) {
-	res.sendFile(__dirname + '/client/testPage.html');
-});
-
 serv.listen(PORT, () => {
 	console.log("Listening on port 3000");
 });

@@ -94,7 +94,7 @@ socket.on('returnRoomReq', function(roomName) {
     window.roomName = roomName;
 	beforeGameSpace.style.display = "none";
 	var nameString = document.createElement("p");
-	nameString.innerHTML = "The room code is \n" + window.roomName;
+	nameString.innerHTML = "The room code is <br>" + window.roomName;
 	nameSpace.appendChild(nameString);
 	startGameSpace.style.display="block";
 });
@@ -106,7 +106,6 @@ socket.on('invalidRoom', function (errStr) {
 });
 
 socket.on('firstRound', function(notebook) {
-    console.log(`notebook's guesses length is ${notebook.guesses.length}`);
     window.playerNotebook = notebook;
     startGameSpace.style.display = "none";
     beforeGameSpace.style.display = "none";
@@ -185,6 +184,7 @@ function joinGame() {
     startGameSpace.style.display = "none";
     beforeGameSpace.style.display = "none";
     var waitMsg = document.createElement("p");
+    waitMsg.class = "mainScnP";
     waitMsg.innerHTML = "Please wait for the host to start the game";
     nameSpace.appendChild(waitMsg);
     socket.emit('joinRoom', window.roomName);
