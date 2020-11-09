@@ -92,6 +92,10 @@ function main() {
 
 	// alirght I don't have time to figure out this closure thing, so 
 	// I'm adding event listeners to buttons one-by-one :(
+	var whiteB = document.getElementById("white");
+	whiteB.addEventListener("click", function() {
+		changeColor("white", gl, u_FragColor);
+	});
 	var redB = document.getElementById("red");
 	redB.addEventListener("click", function() {
 		changeColor("red", gl, u_FragColor);
@@ -134,6 +138,10 @@ function main() {
 		window.isMouseDown = false;
 	};
 
+	myCanvas.ontouchmove = function(ev) {
+		e.preventDefault();
+	};
+
 	// The color for clearing the canvas
 	gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -170,15 +178,16 @@ function changeColor(currColor, gl, u_FragColor) {
 	console.log(`inside changeColor: ${currColor}`);
 	switch(currColor)
 	{
+		case "white":
+			gl.uniform4f(u_FragColor, 1.0, 1.0, 1.0, 1.0);
+			break;
 		case "red":
-			console.log("red called");
 			gl.uniform4f(u_FragColor, 1.0, 0.0, 0.0, 1.0);
 			break;
 		case "green":
 			gl.uniform4f(u_FragColor, 0.0, 1.0, 0.0, 1.0);
 			break;
 		case "blue":
-			console.log(`blue called: ${currColor}`);
 			gl.uniform4f(u_FragColor, 0.0, 0.0, 1.0, 1.0);
 			break;
 		default:

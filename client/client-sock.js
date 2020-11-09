@@ -125,6 +125,7 @@ socket.on('drawYourWord', function (notebook) {
 });
 
 socket.on('beginDrawing', function (notebook) {
+    chosenWordField.style.display = "none";
     waitMessageSpace.style.display = "none";
     window.playerNotebook = notebook;
     canvasSpace.style.display = "block";
@@ -203,6 +204,7 @@ function submitGuessClick() {
     var playerGuess = guessingField.value;
     playerNotebook.guesses.push(playerGuess);
     guessingSpace.style.display = "none";
+    guessingField.value = " ";
     waitMessageSpace.style.display = "block";
     socket.emit('doneGuessing', playerNotebook, window.roomName);
 }

@@ -158,7 +158,7 @@ io.on('connection', function(socket) {
 		if (rooms[roomName].waiting >= rooms[roomName].numPlayers) {
 			var targetRoom = rooms[roomName];
 			++targetRoom.numTurns;
-			if (targetRoom.numTurns == targetRoom.numPlayers) {
+			if (targetRoom.numTurns+1 == targetRoom.numPlayers) {
 				console.log("end game");
 				for (j=0, leng=targetRoom.notebooks.length; j < leng; j++) {
 					currPlayerPlace = targetRoom.notebooks[j].playerid;
@@ -203,7 +203,7 @@ io.on('connection', function(socket) {
 		if (rooms[roomName].waiting >= rooms[roomName].numPlayers) {
 			var targetRoom = rooms[roomName];
 			++targetRoom.numTurns;
-			if (targetRoom.numTurns == targetRoom.numPlayers) {
+			if (targetRoom.numTurns+1 == targetRoom.numPlayers) {
 				console.log("end game");
 				for (j=0, leng=targetRoom.notebooks.length; j < leng; j++) {
 					currPlayerPlace = targetRoom.notebooks[j].playerid;

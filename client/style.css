@@ -78,8 +78,9 @@ p {
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
-	align-items: stretch;
+	align-items: center;
 	background-color: white;
+	margin-top: 50px;
 	padding: 1rem;
 }
 
