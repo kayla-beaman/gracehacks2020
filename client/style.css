@@ -79,9 +79,12 @@ p {
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: center;
+	align-self: center;
 	background-color: white;
 	margin-top: 50px;
+	margin-bottom: 0;
 	padding: 1rem;
+	overflow: auto;
 }
 
 .mainScnP {
@@ -173,10 +176,10 @@ p {
 #gamePage {
 	display: flex;
 	flex-flow: column nowrap;
-	align-items: center;
+	justify-content: center;
+	padding-top: 50px;
 	margin-right: 15%;
 	margin-left: 15%;
-	/*background-color: #64486C;*/
 }
 
 #firstRoundSpace {
@@ -257,4 +260,5 @@ body {
 
 html {
 	height: 100%;
+	overflow: auto;
 }

@@ -163,12 +163,12 @@ socket.on('endGame', function (notebook) {
                             + "<br> Original Drawing: ";
     endResultsSpace.appendChild(tempElement);
     tempImg = document.createElement("img");
-    endResultsSpace.appendChild(tempImg);
     tempImg.src = notebook.drawings[0];
+    endResultsSpace.appendChild(tempImg);
     for (i=1; i<(drawingsLen + guessesLen); i++) {
         if (notebook.guesses[i] != null) {
             tempElement = document.createElement("p");
-            tempElement.innerHTML = "The player's guess: " + notebook.guesses[i];
+            tempElement.innerHTML = "They guessed: " + notebook.guesses[i];
             endResultsSpace.appendChild(tempElement);
         }
         if (notebook.drawings[i] != null) {
